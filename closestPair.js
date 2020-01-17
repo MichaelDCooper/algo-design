@@ -1,18 +1,50 @@
-//TODO figure out how to seperate elements in array into first half/second half
-
 function closestPair(x, y) {
-  const xlength = x.length;
-  const ylength = y.length;
+  let xl, yl, xr, yr;
+  [xl, xr] = createPartition(x);
+  [yl, yr] = createPartition(y);
 
-  let xl, xr, yl, yr;
+  let dl = closestPair(xl, yl);
 
-  let xl = createPartition();
+  let dr = closestPair(yr, yl);
+
+  let d = Math.min(dl, dr);
+
+  m = createPartition(x)[0];
+
+  let middleArr = []; 
+
+  for(let i =0; i<x.length;i++){
+    if(y[i] - x[i]<d){
+      middleArr.push({y:y[i],x:x[i]}); 
+    }
+  }
+
+  dminsq = Math.pow(d,2);  
+
+  for(let i = 0; i<x.length-2){
+    let k = i + 1; 
+    while(k<= x.length -1 && middleArr[k].y - middleArr[i].x < dminsq){
+    dminsq = Math.min(Math.pow((middleArr[k].x-middleArr[i].x),2)-Math.pow((middleArr[k].y-middleArr[i].y),2)); 
+    k = k+1; 
+    }
+    return dminsq
+  }
+
+  console.log(xl, yl, xr, yr);
 }
 
-//helper function for pushing N/2 elements into array
-function createPartition(arr, newArr, n) {
-  for (let i = 0; i < n / 2; i++) {
-    newArr.push(arr[i]);
+function createPartition(arr) {
+  const findSize = arr.length / 2;
+  let final = [],
+    l = [],
+    r = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (i >= findSize) {
+      l.push(arr[i]);
+    } else {
+      r.push(arr[i]);
+    }
   }
-  return newArr;
+  final.push(l, r);
+  return final;
 }
