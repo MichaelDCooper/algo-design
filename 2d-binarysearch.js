@@ -1,8 +1,8 @@
 function binarySearch(arr, key) {
   const length = arr.length - 1;
 
-  let start = arr[0];
-  let end = arr[length];
+  let start = 0;
+  let end = length;
 
   while (start <= end) {
     let mid = Math.floor((start + end) / 2);
